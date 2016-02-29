@@ -1,0 +1,107 @@
+=====================CODEBOOK=====================
+==================================================
+
+-----------------ORIGINAL DATA---------------------
+This project has taken data from the Human Activity Recognition Using Smartphones Data Set (link: http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones)
+Original codebooks and data can be found in: https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
+
+Human Activity Recognition Using Smartphones Dataset
+Version 1.0
+
+Jorge L. Reyes-Ortiz, Davide Anguita, Alessandro Ghio, Luca Oneto.
+Smartlab - Non Linear Complex Systems Laboratory
+DITEN - Università degli Studi di Genova.
+Via Opera Pia 11A, I-16145, Genoa, Italy.
+activityrecognition@smartlab.ws
+www.smartlab.ws
+
+The experiments have been carried out with a group of 30 volunteers within an age bracket of 19-48 years. Each person performed six activities (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING) wearing a smartphone (Samsung Galaxy S II) on the waist. Using its embedded accelerometer and gyroscope, we captured 3-axial linear acceleration and 3-axial angular velocity at a constant rate of 50Hz. The experiments have been video-recorded to label the data manually. The obtained dataset has been randomly partitioned into two sets, where 70% of the volunteers was selected for generating the training data and 30% the test data. 
+
+The sensor signals (accelerometer and gyroscope) were pre-processed by applying noise filters and then sampled in fixed-width sliding windows of 2.56 sec and 50% overlap (128 readings/window). The sensor acceleration signal, which has gravitational and body motion components, was separated using a Butterworth low-pass filter into body acceleration and gravity. The gravitational force is assumed to have only low frequency components, therefore a filter with 0.3 Hz cutoff frequency was used. From each window, a vector of features was obtained by calculating variables from the time and frequency domain. See 'features_info.txt' for more details. 
+
+For each record it is provided:
+
+- Triaxial acceleration from the accelerometer (total acceleration) and the estimated body acceleration.
+- Triaxial Angular velocity from the gyroscope. 
+- A 561-feature vector with time and frequency domain variables. 
+- Its activity label. 
+- An identifier of the subject who carried out the experiment.
+
+---------------------------------------------------
+
+----------------------FEATURES---------------------
+The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ. These time domain signals (prefix 't' to denote time) were captured at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
+
+Subsequently, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals (tBodyAccJerk-XYZ and tBodyGyroJerk-XYZ). Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm (tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag). 
+
+Finally a Fast Fourier Transform (FFT) was applied to some of these signals producing fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyGyro-XYZ, fBodyAccJerkMag, fBodyGyroMag, fBodyGyroJerkMag. (Note the 'f' to indicate frequency domain signals). 
+
+These signals were used to estimate variables of the feature vector for each pattern:  
+'-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
+
+Subject captures the individual being measured for the above features.  Label captures the activity being performed during measurement.
+
+The original variable names in the dataset and their replacement are as follows:
+
+subject			subject
+label			label
+tBodyAcc-XYZ		Body Accelerometer(time)
+tGravityAcc-XYZ		Gravity Accelerometer(time)
+tBodyAccJerk-XYZ	Body Accelerometer Jerk(time)
+tBodyGyro-XYZ		Body Gyro(time)
+tBodyGyroJerk-XYZ	Body Gyro Jerk(time)
+tBodyAccMag		Body Accelerometer Magnitude(time)
+tGravityAccMag		Gravity Accelerometer Magnitude(time)
+tBodyAccJerkMag		Body Accelerometer Jerk Magnitude(time)
+tBodyGyroMag		Body Gyro Magnitude(time)
+tBodyGyroJerkMag	Body Gyro Jerk Magnitude(time)
+fBodyAcc-XYZ		Body Accelerometer(frequency)
+fBodyAccJerk-XYZ	Body Accelerometer Jerk(frequency)
+fBodyGyro-XYZ		Body Gyro(frequency)
+fBodyAccMag		Body Accelerometer Magnitude(frequency)
+fBodyAccJerkMag		Body Accelerometer Jerk Magnitude(frequency)
+fBodyGyroMag		Body Gyro Magnitude(frequency)
+fBodyGyroJerkMag	Body Gyro Jerk Magnitude(frequency)
+
+The 'label' column was re-named to use a descriptive indicator of the label, as opposed to the original numeric indicator
+
+The set of variables that were estimated from these signals are: 
+mean: Mean value
+std: Standard deviation
+---------------------------------------------------
+-----------DATA MANIPULATIONS PERFORMED------------
+Added variable names to training (X_train.txt) and test(X_test.txt) sets from features.txt
+Added rows for subjects and labels to training and test sets from (y_test.txt, y_train.txt, subject_test.txt, subject_train.txt)
+Merged the two above sets via rbind and stored in 'merged'
+Excluded variables that did not measure means or standard deviations via grep, and stored in merged_means_std
+Renamed values for labels using the information from activity_labels.txt
+Renamed variable (column) names to user-friendly descriptors via gsub function
+     These steps result in output table 1: merged_means_std, which contains the tidy data set for mean and standard deviation observations across the dataset
+
+Used dplyr to group merged_means_std by subject and label (stored in merged_means_std_grouped)
+used summarise_each to apply means to the above dataset, resulting in the mean value for each observation grouped by subject and label
+     These steps result in output table 2: summary
+--------------------------------------------------
+
+--------------NOTES AND OTHER INFO----------------
+Notes: 
+======
+- Features are normalized and bounded within [-1,1].
+- Each feature vector is a row on the text file.
+
+For more information about this dataset contact: activityrecognition@smartlab.ws
+
+License:
+========
+Use of this dataset in publications must be acknowledged by referencing the following publication [1] 
+
+[1] Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. Human Activity Recognition on Smartphones using a Multiclass Hardware-Friendly Support Vector Machine. International Workshop of Ambient Assisted Living (IWAAL 2012). Vitoria-Gasteiz, Spain. Dec 2012
+
+This dataset is distributed AS-IS and no responsibility implied or explicit can be addressed to the authors or their institutions for its use or misuse. Any commercial use is prohibited.
+
+Jorge L. Reyes-Ortiz, Alessandro Ghio, Luca Oneto, Davide Anguita. November 2012.
+--------------------------------------------------
+
+
+
+

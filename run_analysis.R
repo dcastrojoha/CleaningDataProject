@@ -74,3 +74,4 @@
   library(dplyr); library(plyr); library(reshape2)
   merged_means_std_grouped <- group_by(merged_means_std, subject, label)
   summary <- summarise_each(merged_means_std_grouped, funs(mean))
+  write.table(summary, file = './project/tidydata.txt', row.names = FALSE)
